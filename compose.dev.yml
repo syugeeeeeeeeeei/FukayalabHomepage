@@ -1,0 +1,11 @@
+services:
+  homepage:
+    build:
+      target: dev             # 開発用ステージを指定
+    volumes:
+      - ./vite_homepage:/app:rw       # ソースコードを同期
+      - /app/node_modules             # コンテナ内のnode_modulesを守る
+    ports:
+      - "4000:4000"           # ローカルアクセス用ポート
+    command: ["yarn", "dev", "--host", "0.0.0.0"]
+    restart: no

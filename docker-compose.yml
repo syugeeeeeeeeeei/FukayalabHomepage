@@ -4,23 +4,18 @@ services:
     build:
       context: ./vite_homepage
       dockerfile: Dockerfile
+      target: prod           # 本番用ステージを指定
     container_name: homepage
     restart: unless-stopped
-    volumes:
-      - ./vite_homepage:/app:rw
-      # - ./vite_homepage/node_modules:/app/node_modules
+    # volumes: は削除 (コードはイメージに含まれるため不要)
     expose:
-      - "4000"
+      - "80"                 # Nginxのポート
     networks:
       - fukaya-lab-network
-    command: ["yarn","dev"]
     labels:
       caddy: http://fukaya-sus.lab
-      caddy.reverse_proxy: "{{upstreams 4000}}"
-    tty: true
-    stdin_open: true
+      caddy.reverse_proxy: "{{upstreams 80}}" # 80番ポートにプロキシ
 
-# [追加] ネットワークの定義
 networks:
   fukaya-lab-network:
     external: true
