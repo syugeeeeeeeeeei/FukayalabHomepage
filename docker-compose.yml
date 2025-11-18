@@ -2,7 +2,7 @@ name: "homepage"
 services:
   homepage:
     build:
-      context: ./vite_homepage
+      context: vite
       dockerfile: Dockerfile
       target: prod           # 本番用ステージを指定
     container_name: homepage
